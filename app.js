@@ -29,32 +29,171 @@ const fillStyleArr = [rainbowGradientStyle, monochromeGradientStyle, sunsetGradi
 /*EXTRA SETUP*/
 
 canvas.width = window.innerWidth;
-canvasContext.fillStyle = fillStyleArr[1];
-canvasContext.lineWidth = 5;
-canvasContext.strokeStyle = 'black'
+canvas.height = window.innerHeight;
 
 
-const pushFrontButton = document.getElementById("pushFront");
-const pushEndButton = document.getElementById("pushEnd");
-const popFrontButton = document.getElementById("popFront");
-const popEndButton = document.getElementById("popEnd");
+const pushFront = document.getElementById("pushFront");
+const pushEnd = document.getElementById("pushEnd");
+const popFront = document.getElementById("popFront");
+const popEnd = document.getElementById("popEnd");
 
-pushFrontButton.chest = 5;
-console.log(pushFrontButton.chest);
+const pushFrontAction = document.getElementById("pushFrontAction");
+console.log(pushFrontAction.pushFrontButton);
+class Node
+{
+    constructor(pData)
+    {
+        this.data = pData || 0;
+        this.nextNode = null;
+    }
+}
+class LinkedList
+{
+    constructor()
+    {
+        this.head = null;
+        this.tail = this.head;
+        this.count = 0;
+    }
+    pushFront(pData)
+    {
+        if(this.head == null)
+        {
+            this.newNode = new Node(pData);
+            this.head = this.newNode;
+            this.tail = this.newNode;
+            this.count++;
+        }
+        else if(this.head != null && this.tail == this.head)
+        {
+            this.newNode = new Node(pData);
+            this.newNode.nextNode = this.head;
+            this.head = this.newNode;
+            this.count++;
+        }
+        else if((this.head != null && this.tail != null) && this.head.nextNode == this.tail)
+        {
+            this.newNode = new Node(pData);
+            this.newNode.nextNode = this.head;
+            this.head = this.newNode;
+            this.count++;
+        }
+        else
+        {
+            this.newNode = new Node(pData);
+            this.newNode.nextNode = this.head;
+            this.head = this.newNode;
+            this.count++;
+        }
+    }
+    pushEnd(pData)
+    {
+        if(this.head==null)
+        {
+            this.newNode = new Node(pData);
+            this.head = this.newNode;
+            this.tail = this.newNode;
+            this.count++;
+        }
+        else if(this.head != null && this.tail == this.head)
+        {
+            this.newNode = new Node(pData);
+            this.tail.nextNode = this.newNode;
+            this.tail = this.newNode;
+            this.count++;
+            
+        }
+        else if((this.head != null && this.tail != null) && this.head.nextNode == this.tail)
+        {
+            this.newNode = new Node(pData);
+            this.tail.nextNode = this.newNode;
+            this.tail = this.newNode;
+            this.count++;
+        }
+        else
+        {
+            this.newNode = new Node(pData);
+            this.tail.nextNode = this.newNode;
+            this.tail = this.newNode;
+            this.count++;
+        }
+    }
+    popFront(pData)
+    {
+
+    }
+    popEnd(pData)
+    {
+
+    }
+
+    displayListV1()
+    {
+        this.temp = this.head;
+        for(let i = 0; i < this.count; i++)
+        {
+            console.log(this.temp.data);
+            this.temp = this.temp.nextNode;
+        }
+    }
+}
+
+function drawList(providedList)
+{
+    let drawLocs = 
+    {
+        drawBoxLoc: {x:20,y:20},
+        clearBoxLoc: {x:15,y:15},
+        drawTextLoc: {x:120,y:150},
+        clearTextLoc: {}
+    };
+    /*BOX*/
+    canvasContext.fillStyle = fillStyleArr[2];
+    canvasContext.lineWidth = 5;
+    canvasContext.strokeStyle = 'black'
+    canvasContext.fillRect(drawLocs.drawBoxLoc.x,drawLocs.drawBoxLoc.y,200,200);
+    canvasContext.strokeRect(drawLocs.drawBoxLoc.x,drawLocs.drawBoxLoc.y,200,200);
+    /*TEXT*/
+    canvasContext.font = "100px Comic Sans MS";
+    canvasContext.textAlign = "center";
+    canvasContext.fillStyle = 'black';
+    canvasContext.fillText(providedList.head.data, drawLocs.drawTextLoc.x, drawLocs.drawTextLoc.y);
+
+    /*
+    
+    
+    */
+}
+
+function clearCanvas()
+{
+    canvasContext.clearRect(0,0,canvas.width,canvas.height);
+}
+
+let thisList = new LinkedList();
+thisList.pushEnd(4);
+thisList.pushEnd(5);
+thisList.pushEnd(6);
+drawList(thisList);
+
+clearCanvas();
+//window.setTimeout(function(){drawList(thisList)}, 1000);
+
+//canvasContext.clearRect(30,30,10,10);
 
 
+//
+
+/*
 
 
+*/
+/*
 
-/*ACTIONS*/
-
-let drawLoc = {x:20,y:20};
-let clearLoc = {x:15,y:15};
 
 function pushEndBox()
 {
-    canvasContext.fillRect(drawLoc.x,drawLoc.y,200,200);
-    canvasContext.strokeRect(drawLoc.x,drawLoc.y,200,200);
+    
     drawLoc.x += 220;
     clearLoc.x += 220;
 }
@@ -65,9 +204,11 @@ function popEndBox()
     drawLoc.x -= 220;
     clearLoc.x -= 220;
 }
+*/
 
 
-
+// onclick="pushEndBox()"
+// onclick="popEndBox()"
 
 
 
