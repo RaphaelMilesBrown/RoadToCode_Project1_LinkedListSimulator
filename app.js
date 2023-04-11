@@ -32,13 +32,13 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 
-const pushFront = document.getElementById("pushFront");
-const pushEnd = document.getElementById("pushEnd");
-const popFront = document.getElementById("popFront");
-const popEnd = document.getElementById("popEnd");
+const pushFrontButton = document.getElementById("pushFrontButton");
+const pushEndButton = document.getElementById("pushEndButton");
+const popFrontButton = document.getElementById("popFrontButton");
+const popEndButton = document.getElementById("popEndButton");
 
 const pushFrontAction = document.getElementById("pushFrontAction");
-console.log(pushFrontAction.pushFrontButton);
+//console.log(pushFrontAction.pushFrontButton);
 class Node
 {
     constructor(pData)
@@ -140,45 +140,57 @@ class LinkedList
 
 function drawList(providedList)
 {
+    let drawBoxMover =  -225;
+
     let drawLocs = 
     {
         drawBoxLoc: {x:20,y:20},
-        clearBoxLoc: {x:15,y:15},
         drawTextLoc: {x:120,y:150},
-        clearTextLoc: {}
     };
-    /*BOX*/
-    canvasContext.fillStyle = fillStyleArr[2];
-    canvasContext.lineWidth = 5;
-    canvasContext.strokeStyle = 'black'
-    canvasContext.fillRect(drawLocs.drawBoxLoc.x,drawLocs.drawBoxLoc.y,200,200);
-    canvasContext.strokeRect(drawLocs.drawBoxLoc.x,drawLocs.drawBoxLoc.y,200,200);
-    /*TEXT*/
-    canvasContext.font = "100px Comic Sans MS";
-    canvasContext.textAlign = "center";
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillText(providedList.head.data, drawLocs.drawTextLoc.x, drawLocs.drawTextLoc.y);
 
-    /*
-    
-    
-    */
+    for(let i = 0; i < providedList.count; i++)
+    {
+        drawBoxMover+=225;
+        providedList.temp = providedList.head;
+        
+        for(let j = 0; j <= i; j++)
+        {
+            
+            /*BOX*/
+            canvasContext.fillStyle = fillStyleArr[2];
+            canvasContext.lineWidth = 5;
+            canvasContext.strokeStyle = 'black'
+            canvasContext.fillRect(drawLocs.drawBoxLoc.x + drawBoxMover,drawLocs.drawBoxLoc.y,200,200);
+            canvasContext.strokeRect(drawLocs.drawBoxLoc.x + drawBoxMover,drawLocs.drawBoxLoc.y,200,200);
+
+            /*TEXT*/
+            canvasContext.font = "100px Comic Sans MS";
+            canvasContext.textAlign = "center";
+            canvasContext.fillStyle = 'black';
+            canvasContext.fillText(providedList.temp.data, drawLocs.drawTextLoc.x  + drawBoxMover, drawLocs.drawTextLoc.y);
+
+            /*----------------------------*/
+            providedList.temp = providedList.temp.nextNode;
+        }
+    }
+
 }
+let thisList = new LinkedList();
+pushFrontButton.onclick = function(){drawList(thisList)};
 
 function clearCanvas()
 {
     canvasContext.clearRect(0,0,canvas.width,canvas.height);
 }
 
-let thisList = new LinkedList();
+
 thisList.pushEnd(4);
 thisList.pushEnd(5);
 thisList.pushEnd(6);
-drawList(thisList);
 
-clearCanvas();
-//window.setTimeout(function(){drawList(thisList)}, 1000);
 
+//window.setTimeout(function(){drawList(thisList)}, 2000);
+//clearCanvas();
 //canvasContext.clearRect(30,30,10,10);
 
 
